@@ -1,7 +1,7 @@
 # microbiome-xai — explainable, cross-cohort gut microbiome biomarkers
 
 [![CI](https://github.com/synmutanX/microbiome-xai/actions/workflows/ci.yml/badge.svg)](https://github.com/synmutanX/microbiome-xai/actions/workflows/ci.yml)
-![Python](https://img.shields.io/badge/python-3.10%E2%80%933.12-blue)
+![Python](https://img.shields.io/badge/python-3.11%E2%80%933.12-blue)
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
 
 Many gut-microbiome "disease signatures" look impressive in one study and fail in the next. `mbxai` is a small,

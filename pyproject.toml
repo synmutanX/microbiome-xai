@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Explainable, cross-cohort validated gut microbiome biomarkers (SHAP, leakage-free CV, confounder checks)"
 readme = "README.md"
 license = "MIT"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 authors = [{ name = "Sofyan" }]
 dependencies = [
     "numpy>=1.26",
@@ -32,7 +32,7 @@ packages = ["src/mbxai"]
 
 [tool.ruff]
 line-length = 130
-target-version = "py310"
+target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B"]
