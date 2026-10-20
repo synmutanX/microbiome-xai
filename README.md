@@ -1,6 +1,6 @@
 # microbiome-xai — explainable, cross-cohort gut microbiome biomarkers
 
-[![CI](https://github.com/YOUR_GITHUB_USERNAME/microbiome-xai/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_GITHUB_USERNAME/microbiome-xai/actions/workflows/ci.yml)
+[![CI](https://github.com/synmutanX/microbiome-xai/actions/workflows/ci.yml/badge.svg)](https://github.com/synmutanX/microbiome-xai/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.10%E2%80%933.12-blue)
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
 
