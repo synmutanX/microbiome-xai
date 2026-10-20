@@ -1,0 +1,36 @@
+# Colorectal cancer vs controls across countries, from curatedMetagenomicData.
+# Export the data first (needs R + Bioconductor, ~1 GB download):
+#   Rscript scripts/export_curatedMetagenomicData.R data/cmd_crc
+# Check data/cmd_crc/studies.tsv for the study names available in your version
+# and edit the list below if needed. With 3+ cohorts the report also includes
+# leave-one-study-out validation.
+title: "Colorectal cancer: cross-country validation of a gut microbiome signature"
+description: >-
+  Public CRC metagenomes from Japan, China, Europe and the USA. Does a signature learned in one country
+  hold in the others, and which species (e.g. oral pathobionts) are consistently explanatory?
+seed: 42
+cv: {n_splits: 5, n_repeats: 5}
+min_prevalence: 0.1
+models: [lasso, rf]
+explain_model: rf
+
+_common: &cmd
+  type: table
+  abundance: data/cmd_crc/relative_abundance.tsv
+  metadata: data/cmd_crc/metadata.tsv
+  sample_column: sample_id
+  label_column: study_condition
+  case_values: [CRC]
+  control_values: [control]
+
+cohorts:
+  - {<<: *cmd, name: Japan (Yachida 2019),  subset: {study_name: [YachidaS_2019]}}
+  - {<<: *cmd, name: China (Yu 2015),       subset: {study_name: [YuJ_2015]}}
+  - {<<: *cmd, name: France (Zeller 2014),  subset: {study_name: [ZellerG_2014]}}
+  - {<<: *cmd, name: Austria (Feng 2015),   subset: {study_name: [FengQ_2015]}}
+  - {<<: *cmd, name: Germany (Wirbel 2018), subset: {study_name: [WirbelJ_2018]}}
+  - {<<: *cmd, name: USA (Vogtmann 2016),   subset: {study_name: [VogtmannE_2016]}}
+
+covariates:
+  - {cohort: Japan (Yachida 2019), columns: [age, BMI]}
+  - {cohort: France (Zeller 2014), columns: [age, BMI]}

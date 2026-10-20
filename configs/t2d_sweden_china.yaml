@@ -1,0 +1,37 @@
+# Type 2 diabetes, two public shotgun metagenomic cohorts profiled with the same
+# pipeline (Microbiome Learning Repo, BURST against RefSeq):
+#   Sweden: Karlsson et al. 2013, Nature  - 70-year-old women, T2D vs normal glucose tolerance
+#   China : Qin et al. 2012, Nature       - T2D vs non-diabetic controls
+# Download first:  mbxai fetch-mlrepo --out data/mlrepo karlsson qin2012
+title: "Type 2 diabetes: does a gut microbiome signature transfer between Sweden and China?"
+description: >-
+  Two public shotgun metagenomic cohorts. Questions: is there a microbiome signal for T2D within each cohort,
+  does a model trained in one country work in the other, which taxa drive the predictions, are they the
+  same in both countries, and how much of the Swedish signal reflects metformin treatment rather than diabetes?
+seed: 42
+cv: {n_splits: 5, n_repeats: 10}
+min_prevalence: 0.1
+models: [lasso, rf]
+explain_model: rf
+top_k: 20
+cohorts:
+  - name: Sweden
+    type: mlrepo
+    directory: data/mlrepo/karlsson
+    task: task-normal-diabetes.txt
+    case_values: [T2D]
+    control_values: [NGT]
+  - name: China
+    type: mlrepo
+    directory: data/mlrepo/qin2012
+    task: task-healthy-diabetes.txt
+    case_values: ["Y"]
+    control_values: ["N"]
+confounders:
+  - cohort: Sweden
+    column: Oral_anti-diabetic_medication
+    positive_values: [Met]
+    label: metformin
+covariates:
+  - {cohort: Sweden, columns: [BMI, Age]}
+  - {cohort: China, columns: [BMI, Age]}
