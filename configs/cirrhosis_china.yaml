@@ -1,0 +1,21 @@
+# Liver cirrhosis vs healthy controls, Qin et al. 2014, Nature (public shotgun data, MLRepo).
+# A single cohort with a strong signal - useful contrast to the T2D analysis.
+# Download first:  mbxai fetch-mlrepo --out data/mlrepo qin2014
+title: "Liver cirrhosis: gut microbiome classifier with out-of-fold SHAP explanations"
+description: >-
+  A strong, well-replicated microbiome signal: in cirrhosis, oral bacteria are found in the gut.
+  Shows what the toolkit reports when a biomarker does work.
+seed: 42
+cv: {n_splits: 5, n_repeats: 10}
+min_prevalence: 0.1
+models: [lasso, rf]
+explain_model: rf
+cohorts:
+  - name: China (cirrhosis)
+    type: mlrepo
+    directory: data/mlrepo/qin2014
+    task: task-healthy-cirrhosis.txt
+    case_values: [Cirrhosis]
+    control_values: [Healthy]
+covariates:
+  - {cohort: China (cirrhosis), columns: [BMI, Age]}

@@ -1,0 +1,16 @@
+# Simulated three-cohort data (mbxai simulate --out data/simulated). Used in CI and tests.
+title: "Simulated data: three cohorts with a shared signal and a drug confounder"
+seed: 42
+cv: {n_splits: 5, n_repeats: 2}
+min_prevalence: 0.1
+models: [lasso, rf]
+explain_model: rf
+cohorts:
+  - {name: A, type: mlrepo, directory: data/simulated/cohort_A, task: task-case-control.txt, case_values: [Case], control_values: [Control]}
+  - {name: B, type: mlrepo, directory: data/simulated/cohort_B, task: task-case-control.txt, case_values: [Case], control_values: [Control]}
+  - {name: C, type: mlrepo, directory: data/simulated/cohort_C, task: task-case-control.txt, case_values: [Case], control_values: [Control]}
+confounders:
+  - {cohort: A, column: Drug, positive_values: ["yes"], label: drug}
+covariates:
+  - {cohort: A, columns: [BMI, Age]}
+  - {cohort: B, columns: [BMI, Age]}

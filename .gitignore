@@ -1,0 +1,22 @@
+# downloaded / generated data - never commit (see scripts/check_public_safety.py)
+data/
+results/
+
+# private list of names that must never appear in this public repo
+.public-safety-denylist
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+
+# editors / OS
+.DS_Store
+.vscode/
+.idea/

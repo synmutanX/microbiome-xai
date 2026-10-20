@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install -e ".[dev]"
+      - name: Public-safety check (no data, secrets or e-mails in the repo)
+        run: python scripts/check_public_safety.py
+      - name: Lint
+        run: ruff check src tests scripts
+      - name: Tests (includes a leakage check with shuffled labels)
+        run: pytest -q
+
+  real-data:
+    # Re-runs the README analyses on public data and keeps the reports as build artifacts
+    needs: checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - run: mbxai fetch-mlrepo --out data/mlrepo
+      - run: mbxai -v run configs/t2d_sweden_china.yaml --out results/t2d_sweden_china
+      - run: mbxai -v run configs/cirrhosis_china.yaml --out results/cirrhosis_china
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: |
+            results/*/report.html
+            results/*/summary.json
+            results/*/tables

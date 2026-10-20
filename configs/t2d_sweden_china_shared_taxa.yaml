@@ -1,0 +1,14 @@
+# Same analysis as t2d_sweden_china.yaml, restricted to taxa detected in BOTH cohorts.
+# The Chinese samples have far fewer detected species per sample (sequencing depth / read
+# length differ between the studies), so many Swedish-model taxa are simply never observed
+# in China. This variant tests whether removing those features rescues transfer.
+title: "Type 2 diabetes, Sweden vs China - shared taxa only"
+seed: 42
+cv: {n_splits: 5, n_repeats: 10}
+min_prevalence: 0.1
+models: [lasso, rf]
+explain_model: rf
+shared_taxa_only: true
+cohorts:
+  - {name: Sweden, type: mlrepo, directory: data/mlrepo/karlsson, task: task-normal-diabetes.txt, case_values: [T2D], control_values: [NGT]}
+  - {name: China, type: mlrepo, directory: data/mlrepo/qin2012, task: task-healthy-diabetes.txt, case_values: ["Y"], control_values: ["N"]}
