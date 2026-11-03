@@ -18,10 +18,10 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import shap
-from sklearn.cluster import KMeans
-from sklearn.decomposition import PCA
-from sklearn.ensemble import RandomForestClassifier
+import shap  # noqa: F401  (used once the TODO functions are written)
+from sklearn.cluster import KMeans  # noqa: F401
+from sklearn.decomposition import PCA  # noqa: F401
+from sklearn.ensemble import RandomForestClassifier  # noqa: F401
 from sklearn.metrics import roc_auc_score
 
 DATA = Path("../shapmat_tutorial/data/curatedCRC.csv")
@@ -134,7 +134,7 @@ def main() -> None:
 
         shap_correct, y_correct = keep_correct(model, shap_df, X_test, y_test)
         scores, var_ratio = pca_2d(shap_correct)
-        scores_crc = scores[y_correct == 1]
+        # scores_crc = scores[y_correct == 1]
         clusters = cluster_crc(scores, y_correct, SETTINGS["n_clusters"])
 
         # TODO (session R2): save per-study tables for the figures, e.g.
