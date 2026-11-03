@@ -84,3 +84,8 @@ p = pd.Series(model.predict_proba(X_test)[:, 1], index=X_test.index)
 print(p.loc[Z_crc.index].groupby(clusters).median().round(2))      # median score per cluster
 stage = d.loc[Z_crc.index, "ajcc_stage"]
 print(pd.crosstab(clusters, stage))                                # stage counts per cluster
+
+# --- Is each cluster enriched for F. nucleatum by abundance (the paper's measure)? ---
+fn = X_test.loc[Z_crc.index, "Fusobacterium_nucleatum"]
+print(pd.DataFrame({"detected": (fn > 0).groupby(clusters).mean().round(2),
+                    "mean_pct": (fn * 100).groupby(clusters).mean().round(3)}))
